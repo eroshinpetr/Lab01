@@ -1,134 +1,117 @@
-## Laboratory work I
+# Отчет по лабораторной работе №1
+**Тема:** Изучение утилит для разработки проектов  
+**Выполнил:** Eroshin Petr IU8-21  
+**Дата выполнения:** 04.03.2026  
+**Среда выполнения:** Linux (Ubuntu) на VirtualBox  
+**Репозиторий с файлами:** https://github.com/eroshinpetr/lab01
 
-Данная лабораторная работа посвещена изучению утилит для разработки проектов
+## 1. Выполнение туториала
 
-## Tasks
-
-- [ ] 1. Ознакомиться со ссылками учебного материала
-- [ ] 2. Выполнить инструкцию учебного материала
-- [ ] 3. Составить отчет и отправить ссылку личным сообщением в **Slack**
-
-## Tutorial
-
+### 1.1. Настройка переменных окружения
 ```bash
-$ export GITHUB_USERNAME=<имя_пользователя>
-$ export GIST_TOKEN=<сохраненный_токен>
-$ alias edit=<nano|vi|vim|subl>
-```
+export GITHUB_USERNAME=eroshinpetr
+export GIST_TOKEN=ghp_XXXXX   # токен скрыт
+alias edit=nano
 
-```sh
-$ mkdir -p ${GITHUB_USERNAME}/workspace
-$ cd ${GITHUB_USERNAME}/workspace
-$ pwd
-$ cd ..
-$ pwd
-```
+1.2. Создание структуры директорий
+mkdir -p ${GITHUB_USERNAME}/workspace
+cd ${GITHUB_USERNAME}/workspace
+mkdir -p workspace/tasks/ workspace/projects/ workspace/reports/
+cd workspace
 
-```sh
-$ mkdir -p workspace/tasks/
-$ mkdir -p workspace/projects/
-$ mkdir -p workspace/reports/
-$ cd workspace
-```
+1.3. Установка Node.js
+wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
+tar -xf node-v6.11.5-linux-x64.tar.xz
+rm -rf node-v6.11.5-linux-x64.tar.xz
+mv node-v6.11.5-linux-x64 node
+export PATH=${PATH}:`pwd`/node/bin
 
-```sh
-# Debian
-$ wget https://nodejs.org/dist/v6.11.5/node-v6.11.5-linux-x64.tar.xz
-$ tar -xf node-v6.11.5-linux-x64.tar.xz
-$ rm -rf node-v6.11.5-linux-x64.tar.xz
-$ mv node-v6.11.5-linux-x64 node
-```
-
-```sh
-$ ls node/bin
-$ echo ${PATH}
-$ export PATH=${PATH}:`pwd`/node/bin
-$ echo ${PATH}
-$ mkdir scripts
-$ cat > scripts/activate<<EOF
+1.4. Создание скрипта activate
+mkdir scripts
+cat > scripts/activate <<EOF
 export PATH=\${PATH}:`pwd`/node/bin
 EOF
-$ source scripts/activate
-```
+source scripts/activate
 
-```sh
-$ gem install gist
-```
+1.5. Установка gist
+gem install gist
+(umask 0077 && echo ${GIST_TOKEN} > ~/.gist)
 
-```sh
-$ (umask 0077 && echo ${GIST_TOKEN} > ~/.gist)
-```
+1.6. Клонирование лабораторной работы
+export LAB_NUMBER=01
+git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
+mkdir -p reports/lab${LAB_NUMBER}
+cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
+cd reports/lab${LAB_NUMBER}
 
-## Report
 
-```sh
-$ export LAB_NUMBER=01
-$ git clone https://github.com/tp-labs/lab${LAB_NUMBER} tasks/lab${LAB_NUMBER}
-$ mkdir reports/lab${LAB_NUMBER}
-$ cp tasks/lab${LAB_NUMBER}/README.md reports/lab${LAB_NUMBER}/REPORT.md
-$ cd reports/lab${LAB_NUMBER}
-$ edit REPORT.md
-$ gist REPORT.md
-```
+2. Домашнее задание
 
-## Links
+2.1. Скачивание и распаковка Boost
+cd ~
+wget https://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz
+tar -xzf boost_1_69_0.tar.gz
+mv boost_1_69_0 ~/boost_1_69_0
+cd ~/boost_1_69_0
 
-### Unix commands
+2.2. Подсчёт файлов
+Без учёта вложенных директорий:
 
-- [ar](https://en.wikipedia.org/wiki/Ar_(Unix))
-- [cat](https://en.wikipedia.org/wiki/Cat_(Unix))
-- [cd](https://en.wikipedia.org/wiki/Cd_(command))
-- [cp](https://en.wikipedia.org/wiki/Cp_(Unix))
-- [cut](https://en.wikipedia.org/wiki/Cut_(Unix))
-- [echo](https://en.wikipedia.org/wiki/Echo_(command))
-- [env](https://en.wikipedia.org/wiki/Env_(shell))
-- [ex](https://en.wikipedia.org/wiki/Ex_(editor))
-- [file](https://en.wikipedia.org/wiki/File_(command))
-- [find](https://en.wikipedia.org/wiki/Find)
-- [ls](https://en.wikipedia.org/wiki/Ls)
-- [man](https://en.wikipedia.org/wiki/Man_page)
-- [mkdir](https://en.wikipedia.org/wiki/Mkdir)
-- [mv](https://en.wikipedia.org/wiki/Mv)
-- [nm](https://en.wikipedia.org/wiki/Nm_(Unix))
-- [ps](https://en.wikipedia.org/wiki/Ps_(Unix))
-- [pwd](https://en.wikipedia.org/wiki/Pwd)
-- [rm](https://en.wikipedia.org/wiki/Rm_(Unix))
-- [sed](https://en.wikipedia.org/wiki/Sed)
-- [touch](https://en.wikipedia.org/wiki/Touch_(Unix))
+find . -maxdepth 1 -type f | wc -l
+Вывод: 16
 
-### Package Managers
+С учётом вложенных директорий:
+find . -type f | wc -l
+Вывод: 62110
 
-- [apt](http://help.ubuntu.ru/wiki/apt) | [dnf](https://en.wikipedia.org/wiki/DNF_(software)) | [yum](https://fedoraproject.org/wiki/Yum/ru)
-- [brew](https://brew.sh) | [linuxbrew](http://linuxbrew.sh)
-- [npm](https://docs.npmjs.com)
+Заголовочные файлы (.h, .hpp, .hxx):
+find . -type f \( -name "*.h" -o -name "*.hpp" -o -name "*.hxx" \) | wc -l
+Вывод: 15208
 
-### Software
+Файлы .cpp:
+find . -type f -name "*.cpp" | wc -l
+Вывод: 13789
 
-- [curl](https://www.gitbook.com/book/bagder/everything-curl/details)
-- [wget](https://www.gnu.org/software/wget/manual/wget.pdf)
-- [clang](https://clang.llvm.org)
-- [g++](https://gcc.gnu.org/onlinedocs/gcc-4.0.2/gcc/G_002b_002b-and-GCC.html)
-- [make](https://en.wikipedia.org/wiki/Make_(software))
-- [open](https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/open.1.html)
-- [openssl](https://www.openssl.org)
-- [nano](https://www.nano-editor.org)
-- [tree](https://linux.die.net/man/1/tree)
-- [vim](http://www.vim.org)
+Остальные файлы:
+find . -type f ! \( -name "*.h" -o -name "*.hpp" -o -name "*.hxx" -o -name "*.cpp" \) | wc -l
+Вывод: 33113
 
-## Homework
+2.3. Поиск файла any.hpp
+find . -name "any.hpp" -type f
+Полный список сохранён в файле any_list.txt.
 
-1. Скачайте библиотеку *boost* с помощью утилиты **wget**. Адрес для скачивания `https://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.gz`.
-2. Разархивируйте скаченный файл в директорию `~/boost_1_69_0`
-3. Подсчитайте количество файлов в директории `~/boost_1_69_0` **не включая** вложенные директории.
-4. Подсчитайте количество файлов в директории `~/boost_1_69_0` **включая** вложенные директории.
-5. Подсчитайте количество заголовочных файлов, файлов с расширением `.cpp`, сколько остальных файлов (не заголовочных и не `.cpp`).
-6. Найдите полный пусть до файла `any.hpp` внутри библиотеки *boost*.
-7. Выведите в консоль все файлы, где упоминается последовательность `boost::asio`.
-8. Скомпилирутйе *boost*. Можно воспользоваться [инструкцией](https://www.boost.org/doc/libs/1_61_0/more/getting_started/unix-variants.html#or-build-custom-binaries) или [ссылкой](https://codeyarns.com/2017/01/24/how-to-build-boost-on-linux/).
-9. Перенесите все скомпилированные на предыдущем шаге статические библиотеки в директорию `~/boost-libs`.
-10. Подсчитайте сколько занимает дискового пространства каждый файл в этой директории.
-11. Найдите *топ10* самых "тяжёлых".
+2.4. Поиск упоминаний boost::asio
+grep -r "boost::asio" . | wc -l
+Вывод: 17424
 
-```
-Copyright (c) 2015-2021 The ISC Authors
-```
+Полный список упоминаний сохранён в файле asio_list.txt.
+
+2.5. Компиляция Boost
+./bootstrap.sh
+./b2
+Лог компиляции сохранён в файле compilation.log.
+
+2.6. Перенос статических библиотек
+mkdir -p ~/boost-libs
+cp ~/boost-install/lib/*.a ~/boost-libs/
+
+2.7. Размер каждого файла в ~/boost-libs
+du -sh ~/boost-libs/*
+Полный список размеров сохранён в lib_sizes.txt.
+
+2.8. Топ-10 самых тяжёлых файлов
+du -sh ~/boost-libs/* | sort -rh | head -10
+
+Вывод:
+4.5M    libboost_wave.a
+2.7M    libboost_regex.a
+2.7M    libboost_math_tr1l.a
+2.7M    libboost_math_tr1.a
+2.6M    libboost_math_tr1f.a
+2.3M    libboost_unit_test_framework.a
+2.3M    libboost_test_exec_monitor.a
+2.0M    libboost_locale.a
+1.6M    libboost_program_options.a
+1.2M    libboost_serialization.a
+
+Полный список сохранён в top10.txt.

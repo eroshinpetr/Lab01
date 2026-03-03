@@ -1,0 +1,10 @@
+4.5M	/home/xxxxx/boost-libs/libboost_wave.a
+2.7M	/home/xxxxx/boost-libs/libboost_regex.a
+2.7M	/home/xxxxx/boost-libs/libboost_math_tr1l.a
+2.7M	/home/xxxxx/boost-libs/libboost_math_tr1.a
+2.6M	/home/xxxxx/boost-libs/libboost_math_tr1f.a
+2.3M	/home/xxxxx/boost-libs/libboost_unit_test_framework.a
+2.3M	/home/xxxxx/boost-libs/libboost_test_exec_monitor.a
+2.0M	/home/xxxxx/boost-libs/libboost_locale.a
+1.6M	/home/xxxxx/boost-libs/libboost_program_options.a
+1.2M	/home/xxxxx/boost-libs/libboost_serialization.a
