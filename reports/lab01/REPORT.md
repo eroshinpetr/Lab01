@@ -53,6 +53,7 @@ wget https://sourceforge.net/projects/boost/files/boost/1.69.0/boost_1_69_0.tar.
 tar -xzf boost_1_69_0.tar.gz
 mv boost_1_69_0 ~/boost_1_69_0
 cd ~/boost_1_69_0
+**Результат:** Архив успешно скачан (размер ~107 МБ) и распакован. Создана директория `~/boost_1_69_0`.
 
 2.2. Подсчёт файлов
 Без учёта вложенных директорий:
@@ -94,6 +95,7 @@ grep -r "boost::asio" . | wc -l
 2.6. Перенос статических библиотек
 mkdir -p ~/boost-libs
 cp ~/boost-install/lib/*.a ~/boost-libs/
+**Результат:** Все статические библиотеки успешно скопированы в `~/boost-libs`. Размер каждого файла записан в [`lib_sizes.txt`](https://github.com/eroshinpetr/Lab01/blob/main/reports/lab01/lib_sizes.txt), топ-10 самых тяжёлых — в [`top10.txt`](https://github.com/eroshinpetr/Lab01/blob/main/reports/lab01/top10.txt).
 
 2.7. Размер каждого файла в ~/boost-libs
 du -sh ~/boost-libs/*
